@@ -301,6 +301,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
+- **AI Maker Space** for providing 100% guidance and backend framework
 - **OpenAI** for providing the GPT models and embeddings
 - **LangChain** for the excellent RAG framework
 - **FastAPI** for the high-performance web framework
