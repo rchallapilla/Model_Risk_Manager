@@ -1,186 +1,317 @@
-<p align = "center" draggable=”false” ><img src="https://github.com/AI-Maker-Space/LLM-Dev-101/assets/37101144/d1343317-fa2f-41e1-8af1-1dbb18399719" 
-     width="200px"
-     height="auto"/>
-</p>
-
-
-## <h1 align="center" id="heading"> 👋 Welcome to the AI Engineer Challenge</h1>
-
-## 🤖 Your First Vibe Coding LLM Application
-
-> If you are a novice, and need a bit more help to get your dev environment off the ground, check out this [Setup Guide](docs/GIT_SETUP.md). This guide will walk you through the 'git' setup you need to get started.
-
-> For additional context on LLM development environments and API key setup, you can also check out our [Interactive Dev Environment for LLM Development](https://github.com/AI-Maker-Space/Interactive-Dev-Environment-for-AI-Engineers).
-
-In this repository, we'll walk you through the steps to create a LLM (Large Language Model) powered application with a vibe-coded frontend!
-
-Are you ready? Let's get started!
-
-<details>
-  <summary>🖥️ Accessing "gpt-4.1-mini" (ChatGPT) like a developer</summary>
-
-1. Head to [this notebook](https://colab.research.google.com/drive/1sT7rzY_Lb1_wS0ELI1JJfff0NUEcSD72?usp=sharing) and follow along with the instructions!
-
-2. Complete the notebook and try out your own system/assistant messages!
-
-That's it! Head to the next step and start building your application!
-
-</details>
-
-
-<details>
-  <summary>🏗️ Forking & Cloning This Repository</summary>
-
-Before you begin, make sure you have:
-
-1. 👤 A GitHub account (you'll need to replace `YOUR_GITHUB_USERNAME` with your actual username)
-2. 🔧 Git installed on your local machine
-3. 💻 A code editor (like Cursor, VS Code, etc.)
-4. ⌨️ Terminal access (Mac/Linux) or Command Prompt/PowerShell (Windows)
-5. 🔑 A GitHub Personal Access Token (for authentication)
-
-Got everything in place? Let's move on!
-
-1. Fork [this](https://github.com/AI-Maker-Space/The-AI-Engineer-Challenge) repo!
-
-     ![image](https://i.imgur.com/bhjySNh.png)
-
-1. Clone your newly created repo.
-
-     ``` bash
-     # First, navigate to where you want the project folder to be created
-     cd PATH_TO_DESIRED_PARENT_DIRECTORY
-
-     # Then clone (this will create a new folder called The-AI-Engineer-Challenge)
-     git clone git@github.com:<YOUR GITHUB USERNAME>/The-AI-Engineer-Challenge.git
-     ```
-
-     > Note: This command uses SSH. If you haven't set up SSH with GitHub, the command will fail. In that case, use HTTPS by replacing `git@github.com:` with `https://github.com/` - you'll then be prompted for your GitHub username and personal access token.
-
-2. Verify your git setup:
-
-     ```bash
-     # Check that your remote is set up correctly
-     git remote -v
-
-     # Check the status of your repository
-     git status
-
-     # See which branch you're on
-     git branch
-     ```
-
-     <!-- > Need more help with git? Check out our [Detailed Git Setup Guide](docs/GIT_SETUP.md) for a comprehensive walkthrough of git configuration and best practices. -->
-
-3. Open the freshly cloned repository inside Cursor!
-
-     ```bash
-     cd The-AI-Engineering-Challenge
-     cursor .
-     ```
-
-4. Check out the existing backend code found in `/api/app.py`
-
-</details>
-
-<details>
-  <summary>🔥Setting Up for Vibe Coding Success </summary>
-
-While it is a bit counter-intuitive to set things up before jumping into vibe-coding - it's important to remember that there exists a gradient betweeen AI-Assisted Development and Vibe-Coding. We're only reaching *slightly* into AI-Assisted Development for this challenge, but it's worth it!
-
-1. Check out the rules in `.cursor/rules/` and add theme-ing information like colour schemes in `frontend-rule.mdc`! You can be as expressive as you'd like in these rules!
-2. We're going to index some docs to make our application more likely to succeed. To do this - we're going to start with `CTRL+SHIFT+P` (or `CMD+SHIFT+P` on Mac) and we're going to type "custom doc" into the search bar. 
-
-     ![image](https://i.imgur.com/ILx3hZu.png)
-3. We're then going to copy and paste `https://nextjs.org/docs` into the prompt.
-
-     ![image](https://i.imgur.com/psBjpQd.png)
-
-4. We're then going to use the default configs to add these docs to our available and indexed documents.
-
-     ![image](https://i.imgur.com/LULLeaF.png)
-
-5. After that - you will do the same with Vercel's documentation. After which you should see:
-
-     ![image](https://i.imgur.com/hjyXhhC.png) 
-
-</details>
-
-<details>
-  <summary>😎 Vibe Coding a Front End for the FastAPI Backend</summary>
-
-1. Use `Command-L` or `CTRL-L` to open the Cursor chat console. 
-
-2. Set the chat settings to the following:
-
-     ![image](https://i.imgur.com/LSgRSgF.png)
-
-3. Ask Cursor to create a frontend for your application. Iterate as much as you like!
-
-4. Run the frontend using the instructions Cursor provided. 
-
-> NOTE: If you run into any errors, copy and paste them back into the Cursor chat window - and ask Cursor to fix them!
-
-> NOTE: You have been provided with a backend in the `/api` folder - please ensure your Front End integrates with it!
-
-</details>
-
-<details>
-  <summary>🚀 Deploying Your First LLM-powered Application with Vercel</summary>
-
-1. Ensure you have signed into [Vercel](https://vercel.com/) with your GitHub account.
-
-2. Ensure you have `npm` (this may have been installed in the previous vibe-coding step!) - if you need help with that, ask Cursor!
-
-3. Run the command:
-
-     ```bash
-     npm install -g vercel
-     ```
-
-4. Run the command:
-
-     ```bash
-     vercel
-     ```
-
-5. Follow the in-terminal instructions. (Below is an example of what you will see!)
-
-     ![image](https://i.imgur.com/D1iKGCq.png)
-
-6. Once the build is completed - head to the provided link and try out your app!
-
-> NOTE: Remember, if you run into any errors - ask Cursor to help you fix them!
-
-</details>
-
-### Vercel Link to Share
-
-You'll want to make sure you share you *domains* hyperlink to ensure people can access your app!
-
-![image](https://i.imgur.com/mpXIgIz.png)
-
-> NOTE: Test this is the public link by trying to open your newly deployed site in an Incognito browser tab!
-
-### 🎉 Congratulations! 
-
-You just deployed your first LLM-powered application! 🚀🚀🚀 Get on linkedin and post your results and experience! Make sure to tag us at @AIMakerspace!
-
-Here's a template to get your post started!
+<div align="center">
+  <img src="https://img.shields.io/badge/Model%20Risk%20Manager-AI%20Powered-blue?style=for-the-badge&logo=shield" alt="Model Risk Manager" />
+  <h1>🤖 Model Risk Manager</h1>
+  <p><strong>AI-Powered Model Risk Management Assistant</strong></p>
+  <p>Your intelligent companion for Model Risk Management queries, document analysis, and regulatory compliance guidance.</p>
+  
+  [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
+  [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-green.svg)](https://fastapi.tiangolo.com)
+  [![Next.js](https://img.shields.io/badge/Next.js-15.3+-black.svg)](https://nextjs.org)
+  [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-purple.svg)](https://openai.com)
+  [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+</div>
+
+---
+
+## 🎯 What is Model Risk Manager?
+
+Model Risk Manager is a sophisticated AI-powered application designed to assist financial institutions, risk managers, and compliance officers with Model Risk Management (MRM) queries. It leverages advanced RAG (Retrieval-Augmented Generation) technology to provide accurate, context-aware responses based on comprehensive MRM documentation and regulatory frameworks.
+
+### ✨ Key Features
+
+- **📚 Intelligent Document Processing**: Upload and analyze MRM documents with advanced PDF processing
+- **🔍 RAG-Powered Q&A**: Get precise answers from your MRM knowledge base using vector search
+- **📋 Regulatory Compliance**: Access guidance on SR 11-7, Basel III, CCAR/DFAST, and other frameworks
+- **🔄 Real-time Document Indexing**: Dynamic document processing with chunking and embedding
+- **🎨 Modern Web Interface**: Clean, responsive UI built with Next.js and Tailwind CSS
+- **⚡ Fast API Backend**: High-performance FastAPI server with streaming responses
+- **🔒 Secure Processing**: Ephemeral document processing with no persistent storage
+
+---
+
+## 🏗️ Architecture Overview
 
 ```
-🚀🎉 Exciting News! 🎉🚀
-
-🏗️ Today, I'm thrilled to announce that I've successfully built and shipped my first-ever LLM using the powerful combination of , and the OpenAI API! 🖥️
-
-Check it out 👇
-[LINK TO APP]
-
-A big shoutout to the @AI Makerspace for all making this possible. Couldn't have done it without the incredible community there. 🤗🙏
-
-Looking forward to building with the community! 🙌✨ Here's to many more creations ahead! 🥂🎉
-
-Who else is diving into the world of AI? Let's connect! 🌐💡
-
-#FirstLLMApp 
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Backend       │    │   RAG System    │
+│   (Next.js)     │◄──►│   (FastAPI)     │◄──►│   (LangGraph)   │
+│                 │    │                 │    │                 │
+│ • Chat Interface│    │ • REST API      │    │ • Document      │
+│ • File Upload   │    │ • PDF Processing│    │   Processing    │
+│ • Real-time     │    │ • Streaming     │    │ • Vector Search │
+│   Responses     │    │   Responses     │    │ • Context       │
+└─────────────────┘    └─────────────────┘    │   Generation    │
+                                              └─────────────────┘
+                                                       │
+                                              ┌─────────────────┐
+                                              │   Vector Store  │
+                                              │   (Qdrant/FAISS)│
+                                              └─────────────────┘
 ```
+
+### 🔧 Technology Stack
+
+**Backend:**
+- **FastAPI** - High-performance web framework
+- **LangGraph** - Workflow orchestration for RAG
+- **LangChain** - LLM integration and document processing
+- **OpenAI** - GPT-4o-mini for intelligent responses
+- **Qdrant/FAISS** - Vector database for semantic search
+- **PyMuPDF** - PDF document processing
+
+**Frontend:**
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Lucide React** - Beautiful icons
+
+**Infrastructure:**
+- **Vercel** - Deployment platform
+- **Python 3.11+** - Backend runtime
+- **Node.js** - Frontend runtime
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.11 or higher
+- Node.js 18 or higher
+- OpenAI API key
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-repo-url>
+cd Model_Risk_Manager
+```
+
+### 2. Backend Setup
+
+```bash
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -e .
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env and add your OPENAI_API_KEY
+```
+
+### 3. Frontend Setup
+
+```bash
+cd frontend
+npm install
+```
+
+### 4. Run the Application
+
+**Terminal 1 - Backend:**
+```bash
+cd api
+uvicorn app:app --reload --port 8000
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd frontend
+npm run dev
+```
+
+Visit `http://localhost:3000` to access the application!
+
+---
+
+## 📖 Usage Guide
+
+### 🤖 Chat with MRM Knowledge Base
+
+1. **Ask Questions**: Type your MRM-related questions in the chat interface
+2. **Get Contextual Answers**: Receive responses based on your uploaded documents and built-in MRM guidelines
+3. **Streaming Responses**: Watch answers generate in real-time
+
+### 📄 Upload Documents
+
+1. **Drag & Drop**: Upload PDF documents directly to the interface
+2. **Automatic Processing**: Documents are automatically chunked, embedded, and indexed
+3. **Instant Availability**: Start querying your documents immediately after upload
+
+### 🎯 Supported Topics
+
+- **Model Validation**: Best practices, frameworks, and methodologies
+- **Risk Governance**: Three lines of defense, committees, and oversight
+- **Regulatory Compliance**: SR 11-7, Basel III, CCAR/DFAST guidance
+- **Data Management**: Quality standards, governance, and lineage
+- **Technology Infrastructure**: System requirements and tools
+- **Training & Competency**: Skill requirements and development programs
+
+---
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+OPENAI_API_KEY=your_openai_api_key_here
+MODEL_NAME=gpt-4o-mini
+EMBEDDING_MODEL=text-embedding-3-small
+CHUNK_SIZE=750
+CHUNK_OVERLAP=0
+VECTOR_STORE_TYPE=qdrant
+```
+
+### API Configuration
+
+The backend API supports the following endpoints:
+
+- `POST /api/chat` - General chat with MRM knowledge
+- `POST /api/upload_pdf` - Upload and index PDF documents
+- `POST /api/pdf_chat` - Chat with specific uploaded documents
+- `GET /api/health` - Health check endpoint
+
+---
+
+## 🏗️ Development
+
+### Project Structure
+
+```
+Model_Risk_Manager/
+├── api/                    # FastAPI backend
+│   ├── app.py             # Main API application
+│   ├── rag_system.py      # RAG implementation
+│   └── requirements.txt   # Python dependencies
+├── frontend/              # Next.js frontend
+│   ├── src/app/          # App router pages
+│   ├── package.json      # Node.js dependencies
+│   └── next.config.ts    # Next.js configuration
+├── docs/                  # MRM documentation
+│   ├── sample_mrm_guidelines.md
+│   └── pub-ch-model-risk.pdf
+├── pyproject.toml        # Python project configuration
+└── vercel.json           # Vercel deployment config
+```
+
+### Adding New Features
+
+1. **Backend Changes**: Modify files in the `api/` directory
+2. **Frontend Changes**: Update components in `frontend/src/app/`
+3. **Documentation**: Add new MRM documents to the `docs/` directory
+4. **Testing**: Use the provided test files for validation
+
+### Code Style
+
+- **Python**: Follow PEP 8 guidelines
+- **TypeScript**: Use strict mode and proper typing
+- **React**: Use functional components with hooks
+- **Documentation**: Maintain comprehensive docstrings
+
+---
+
+## 🚀 Deployment
+
+### Vercel Deployment
+
+1. **Connect Repository**: Link your GitHub repository to Vercel
+2. **Configure Build Settings**:
+   - Build Command: `cd frontend && npm run build`
+   - Output Directory: `frontend/.next`
+   - Install Command: `cd frontend && npm install`
+3. **Set Environment Variables**: Add your `OPENAI_API_KEY` in Vercel dashboard
+4. **Deploy**: Push to main branch for automatic deployment
+
+### Environment Variables for Production
+
+```env
+OPENAI_API_KEY=your_production_openai_key
+NODE_ENV=production
+NEXT_PUBLIC_API_URL=https://your-api-domain.com
+```
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### Development Guidelines
+
+- Write clear, documented code
+- Add tests for new features
+- Follow the existing code style
+- Update documentation as needed
+- Ensure all tests pass before submitting
+
+---
+
+## 📚 Documentation
+
+- **[API Documentation](api/README.md)** - Backend API reference
+- **[Frontend Guide](frontend/README.md)** - Frontend development guide
+- **[RAG System](PDF_RAG_README.md)** - Detailed RAG implementation
+- **[Deployment Guide](MERGE.md)** - Deployment and merge instructions
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**OpenAI API Errors:**
+- Verify your API key is correct and has sufficient credits
+- Check rate limits and usage quotas
+
+**PDF Upload Issues:**
+- Ensure files are valid PDFs
+- Check file size limits (recommended: < 50MB)
+- Verify document is not password-protected
+
+**Vector Store Errors:**
+- Clear vector store cache if indexing fails
+- Check available disk space
+- Verify Qdrant/FAISS installation
+
+### Getting Help
+
+1. Check the [FAQ](FAQandCommonIssues.md)
+2. Review existing [issues](../../issues)
+3. Create a new issue with detailed error information
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **OpenAI** for providing the GPT models and embeddings
+- **LangChain** for the excellent RAG framework
+- **FastAPI** for the high-performance web framework
+- **Next.js** for the React framework
+- **Vercel** for seamless deployment
+
+---
+
+<div align="center">
+  <p>Made with ❤️ for the Model Risk Management community</p>
+  <p>
+    <a href="#-what-is-model-risk-manager">Back to top</a>
+  </p>
+</div>

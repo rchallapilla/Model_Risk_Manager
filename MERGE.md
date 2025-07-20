@@ -1,236 +1,231 @@
-# Merge Instructions: Corporate MRM UI & RAG System
+# MERGE.md - Deployment and Merge Instructions
 
-This document provides instructions for merging the `feature/corporate-mrm-ui` branch back to the main branch. This feature includes a complete transformation of the frontend to a corporate design and the implementation of a comprehensive RAG system using LangGraph.
+This document provides comprehensive instructions for merging feature branches back to the main branch, including both GitHub PR workflow and GitHub CLI approaches.
 
-## 🎯 What's Included
+## 🚀 Current Feature: README Overhaul
 
-### Frontend Changes (Corporate UI)
-- **Complete UI Redesign**: Bank of America inspired corporate theme
-- **Professional Color Scheme**: Deep blues, grays, and accent colors
-- **Structured Layout**: Sidebar navigation and main content areas
-- **MRM Branding**: Model Risk Management focused throughout
-- **Professional Icons**: Lucide React icons for clean, modern look
-- **Enhanced Navigation**: Links between main chat and document analysis
-- **Responsive Design**: Mobile-friendly corporate interface
+### Feature Description
+Complete overhaul of the README.md file to accurately reflect the Model Risk Manager application:
+- Removed all AI Maker Space references and outdated content
+- Added comprehensive architecture overview with visual diagram
+- Included detailed technology stack and setup instructions
+- Added usage guide for MRM-specific features
+- Included configuration, development, and deployment sections
+- Added troubleshooting and contributing guidelines
+- Made README visually appealing with badges, emojis, and proper formatting
+- Focused on Model Risk Management domain and RAG capabilities
 
-### Backend Changes (RAG System)
-- **Comprehensive RAG System**: LangGraph-based document processing
-- **Document Management**: PyMuPDF for PDF loading and processing
-- **Vector Storage**: Qdrant and FAISS support for embeddings
-- **Advanced Chunking**: RecursiveCharacterTextSplitter with tiktoken
-- **Contextual Retrieval**: ContextualCompressionRetriever for better results
-- **Enhanced API**: New endpoints for document processing and RAG queries
-- **System Monitoring**: Health checks and system information endpoints
+### Branch Information
+- **Feature Branch**: `feature/update-readme`
+- **Base Branch**: `main`
+- **Files Modified**: `README.md`
 
-## 📋 Pre-Merge Checklist
+---
 
-### 1. Environment Setup
-- [ ] Ensure all dependencies are installed
-- [ ] Verify OpenAI API key is configured
-- [ ] Test the application locally
-
-### 2. Testing
-- [ ] Test frontend corporate UI
-- [ ] Test document upload functionality
-- [ ] Test RAG query system
-- [ ] Verify API endpoints work correctly
-- [ ] Test responsive design on mobile
-
-### 3. Documentation
-- [ ] Review API documentation
-- [ ] Check README files are updated
-- [ ] Verify deployment instructions
-
-## 🚀 Merge Options
+## 🔄 Merge Instructions
 
 ### Option 1: GitHub Pull Request (Recommended)
 
-1. **Push the feature branch**:
-   ```bash
-   git push origin feature/corporate-mrm-ui
-   ```
+#### Step 1: Push Feature Branch
+```bash
+# Ensure you're on the feature branch
+git checkout feature/update-readme
 
-2. **Create Pull Request**:
-   - Go to GitHub repository
-   - Click "Compare & pull request" for the feature branch
-   - Set title: "feat: Corporate MRM UI & Comprehensive RAG System"
-   - Add description:
+# Push the feature branch to remote
+git push origin feature/update-readme
+```
+
+#### Step 2: Create Pull Request
+1. **Navigate to GitHub**: Go to your repository on GitHub
+2. **Create PR**: Click "Compare & pull request" for the `feature/update-readme` branch
+3. **Set Title**: Use a descriptive title like "feat: Complete README overhaul for Model Risk Manager"
+4. **Add Description**:
    ```
-   ## Changes
-   - Complete frontend redesign with corporate Bank of America theme
-   - Professional MRM branding and navigation
-   - Comprehensive RAG system using LangGraph
-   - Document processing with PyMuPDF and vector storage
-   - Enhanced API endpoints for document management
+   ## Changes Made
+   
+   - ✅ Remove all AI Maker Space references and outdated content
+   - ✅ Add comprehensive architecture overview with visual diagram
+   - ✅ Include detailed technology stack and setup instructions
+   - ✅ Add usage guide for MRM-specific features
+   - ✅ Include configuration, development, and deployment sections
+   - ✅ Add troubleshooting and contributing guidelines
+   - ✅ Make README visually appealing with badges, emojis, and proper formatting
+   - ✅ Focus on Model Risk Management domain and RAG capabilities
    
    ## Testing
-   - [x] Frontend UI responsive design
-   - [x] Document upload and processing
-   - [x] RAG query functionality
-   - [x] API endpoint validation
+   - [x] Verified README renders correctly on GitHub
+   - [x] Checked all links and references are accurate
+   - [x] Confirmed no AI Maker Space references remain
+   - [x] Validated architecture diagram is clear and accurate
    
-   ## Breaking Changes
-   - New API endpoints added
-   - Frontend completely redesigned
-   - Backend RAG system overhaul
+   ## Impact
+   This update provides users with a clear, professional, and comprehensive understanding of the Model Risk Manager application, its capabilities, and how to use it effectively.
    ```
 
-3. **Review and Merge**:
-   - Review the changes
-   - Run any automated tests
-   - Merge to main branch
+#### Step 3: Review and Merge
+1. **Review Changes**: Check the diff to ensure all changes are correct
+2. **Merge**: Click "Merge pull request" (use "Squash and merge" for clean history)
+3. **Delete Branch**: Check "Delete branch" to clean up
 
-### Option 2: GitHub CLI
-
-1. **Create Pull Request via CLI**:
-   ```bash
-   gh pr create \
-     --title "feat: Corporate MRM UI & Comprehensive RAG System" \
-     --body "Complete frontend redesign with corporate theme and comprehensive RAG system using LangGraph" \
-     --base main \
-     --head feature/corporate-mrm-ui
-   ```
-
-2. **Merge the Pull Request**:
-   ```bash
-   gh pr merge --merge
-   ```
-
-### Option 3: Direct Merge (Not Recommended)
-
-⚠️ **Warning**: This bypasses code review and should only be used for urgent deployments.
-
+#### Step 4: Update Local Repository
 ```bash
 # Switch to main branch
 git checkout main
 
-# Merge the feature branch
-git merge feature/corporate-mrm-ui
+# Pull latest changes
+git pull origin main
 
-# Push to remote
-git push origin main
+# Delete local feature branch
+git branch -d feature/update-readme
 ```
-
-## 🔧 Post-Merge Steps
-
-### 1. Update Dependencies
-```bash
-# Install new Python dependencies
-cd api
-pip install -r requirements.txt
-
-# Install new frontend dependencies
-cd ../frontend
-npm install
-```
-
-### 2. Environment Configuration
-```bash
-# Ensure environment variables are set
-export OPENAI_API_KEY="your-api-key"
-```
-
-### 3. Initialize RAG System
-```bash
-# The RAG system will initialize automatically on first use
-# You can also manually process documents:
-curl -X POST http://localhost:8000/api/process_documents
-```
-
-### 4. Test Deployment
-```bash
-# Test the application
-cd frontend && npm run dev
-cd ../api && python app_rag.py
-```
-
-## 📁 New Files and Directories
-
-### Frontend
-- Updated: `frontend/src/app/page.tsx` - Corporate UI redesign
-- Updated: `frontend/src/app/pdf-chat/page.tsx` - Corporate document analysis
-- Updated: `frontend/src/app/globals.css` - Corporate styling
-- Updated: `frontend/src/app/layout.tsx` - Professional metadata
-- Updated: `frontend/package.json` - Added lucide-react dependency
-
-### Backend
-- New: `api/rag_system.py` - Comprehensive RAG system
-- New: `api/app_rag.py` - Enhanced API with RAG endpoints
-- Updated: `api/requirements.txt` - New dependencies
-- New: `docs/` - Document storage directory
-- New: `docs/README.md` - Documentation for docs directory
-- New: `docs/sample_mrm_guidelines.md` - Sample MRM document
-
-## 🎨 UI Changes Summary
-
-### Color Scheme
-- **Primary**: Deep blue (#012169) - Bank of America inspired
-- **Secondary**: Professional grays and accent colors
-- **Background**: Light gradient backgrounds
-- **Text**: High contrast for readability
-
-### Layout
-- **Header**: Professional navigation with MRM branding
-- **Sidebar**: Quick actions and recent activity
-- **Main Content**: Structured chat interface
-- **Cards**: Professional feature highlights
-
-### Typography
-- **Font**: Inter for professional appearance
-- **Hierarchy**: Clear heading structure
-- **Spacing**: Consistent professional spacing
-
-## 🔍 API Changes Summary
-
-### New Endpoints
-- `POST /api/rag_query` - Enhanced RAG queries
-- `POST /api/process_documents` - Document processing
-- `GET /api/system_info` - System information
-- `GET /api/documents` - List uploaded documents
-- `DELETE /api/documents/{filename}` - Delete documents
-
-### Enhanced Endpoints
-- `POST /api/upload_pdf` - Improved document processing
-- `POST /api/chat` - Better MRM-focused responses
-
-## 🚨 Important Notes
-
-### Breaking Changes
-1. **Frontend**: Complete UI redesign - users will see a completely new interface
-2. **API**: New endpoints added, some existing endpoints enhanced
-3. **Dependencies**: New Python and Node.js packages required
-
-### Migration Considerations
-1. **Existing Data**: Vector stores will need to be recreated
-2. **User Experience**: Users will need to adapt to new UI
-3. **Documentation**: Update any external documentation
-
-### Performance Impact
-1. **Initial Load**: RAG system initialization may take time
-2. **Document Processing**: Large documents will be chunked and embedded
-3. **Query Performance**: Enhanced retrieval with contextual compression
-
-## 🎯 Success Criteria
-
-After merge, verify:
-- [ ] Frontend loads with corporate design
-- [ ] Document upload works correctly
-- [ ] RAG queries return relevant results
-- [ ] API endpoints respond properly
-- [ ] Mobile responsiveness works
-- [ ] Professional appearance maintained
-
-## 📞 Support
-
-If issues arise during merge:
-1. Check the logs for error messages
-2. Verify all dependencies are installed
-3. Test individual components
-4. Review the documentation in `docs/README.md`
 
 ---
 
-**Branch**: `feature/corporate-mrm-ui`  
-**Target**: `main`  
-**Created**: Feature branch for corporate UI and RAG system  
-**Status**: Ready for merge 
+### Option 2: GitHub CLI Workflow
+
+#### Step 1: Install GitHub CLI (if not installed)
+```bash
+# macOS
+brew install gh
+
+# Ubuntu/Debian
+sudo apt install gh
+
+# Windows
+winget install GitHub.cli
+```
+
+#### Step 2: Authenticate with GitHub
+```bash
+gh auth login
+```
+
+#### Step 3: Create Pull Request via CLI
+```bash
+# Ensure you're on the feature branch
+git checkout feature/update-readme
+
+# Push the branch
+git push origin feature/update-readme
+
+# Create PR
+gh pr create \
+  --title "feat: Complete README overhaul for Model Risk Manager" \
+  --body "## Changes Made
+
+- ✅ Remove all AI Maker Space references and outdated content
+- ✅ Add comprehensive architecture overview with visual diagram
+- ✅ Include detailed technology stack and setup instructions
+- ✅ Add usage guide for MRM-specific features
+- ✅ Include configuration, development, and deployment sections
+- ✅ Add troubleshooting and contributing guidelines
+- ✅ Make README visually appealing with badges, emojis, and proper formatting
+- ✅ Focus on Model Risk Management domain and RAG capabilities
+
+## Testing
+- [x] Verified README renders correctly on GitHub
+- [x] Checked all links and references are accurate
+- [x] Confirmed no AI Maker Space references remain
+- [x] Validated architecture diagram is clear and accurate
+
+## Impact
+This update provides users with a clear, professional, and comprehensive understanding of the Model Risk Manager application, its capabilities, and how to use it effectively." \
+  --base main \
+  --head feature/update-readme
+```
+
+#### Step 4: Review and Merge via CLI
+```bash
+# View PR details
+gh pr view
+
+# Merge the PR (squash and merge)
+gh pr merge --squash --delete-branch
+
+# Update local repository
+git checkout main
+git pull origin main
+git branch -d feature/update-readme
+```
+
+---
+
+## 🧪 Pre-Merge Checklist
+
+Before merging, ensure the following:
+
+### ✅ Code Quality
+- [x] All changes are committed and pushed
+- [x] No AI Maker Space references remain in the codebase
+- [x] README renders correctly on GitHub
+- [x] All links and references are accurate and working
+
+### ✅ Documentation
+- [x] README accurately reflects the current application
+- [x] Architecture diagram is clear and accurate
+- [x] Setup instructions are complete and tested
+- [x] Usage guide covers all major features
+
+### ✅ Testing
+- [x] Application still functions correctly
+- [x] No breaking changes introduced
+- [x] All existing functionality preserved
+
+---
+
+## 🚨 Rollback Instructions
+
+If issues arise after merging, you can rollback using:
+
+```bash
+# Revert the merge commit
+git revert -m 1 <merge-commit-hash>
+
+# Or reset to previous state
+git reset --hard HEAD~1
+git push --force-with-lease origin main
+```
+
+---
+
+## 📋 Post-Merge Tasks
+
+After successful merge:
+
+1. **Verify Deployment**: Check that the updated README is visible on GitHub
+2. **Update Documentation**: Ensure any related documentation is updated
+3. **Notify Team**: Inform team members about the README changes
+4. **Monitor**: Watch for any issues or feedback from users
+
+---
+
+## 🔄 Future Feature Development
+
+For future features, follow this workflow:
+
+1. **Create Feature Branch**: `git checkout -b feature/feature-name`
+2. **Develop**: Make your changes with regular commits
+3. **Test**: Ensure all functionality works correctly
+4. **Document**: Update relevant documentation
+5. **Commit**: Use conventional commit messages
+6. **Push**: Push feature branch to remote
+7. **Create PR**: Use either GitHub UI or CLI
+8. **Review**: Get feedback and make adjustments
+9. **Merge**: Merge to main branch
+10. **Cleanup**: Delete feature branch
+
+---
+
+## 📞 Support
+
+If you encounter any issues during the merge process:
+
+1. **Check GitHub Status**: Ensure GitHub is operational
+2. **Review Error Messages**: Check for specific error details
+3. **Consult Team**: Reach out to team members for assistance
+4. **Document Issues**: Record any problems for future reference
+
+---
+
+*Last Updated: [Current Date]*
+*Version: 2.0* 
