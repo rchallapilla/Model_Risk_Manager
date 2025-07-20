@@ -13,10 +13,10 @@ from datetime import datetime
 
 # LangChain imports
 from langchain_community.document_loaders import DirectoryLoader, PyMuPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_openai.embeddings import OpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Qdrant, FAISS
-from langchain.schema import Document
+from langchain_core.documents import Document
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import LLMChainExtractor
 
@@ -24,7 +24,7 @@ from langchain.retrievers.document_compressors import LLMChainExtractor
 from langgraph.graph import StateGraph, END
 from langgraph.prebuilt import ToolNode
 from langchain_openai import ChatOpenAI
-from langchain.schema import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage, AIMessage
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
