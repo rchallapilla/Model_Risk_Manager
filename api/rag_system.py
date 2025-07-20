@@ -120,25 +120,43 @@ class MRMRAGSystem:
     
     def _generate_answer(self, state: Any) -> Dict:
         """
-        Generate answer using LLM with context
+        Generate answer using LLM with context - STRICTLY MRM-focused
         """
         try:
+            # Check if we have relevant context
+            if not state.context or state.context.strip() == "No relevant documents found.":
+                return {
+                    "answer": "I apologize, but I can only answer questions related to Model Risk Management (MRM) based on the documents I have access to. Your question appears to be outside the scope of my MRM knowledge base. Please ask a question specifically about Model Risk Management, model validation, risk governance, regulatory compliance (SR 11-7, Basel III, CCAR/DFAST), or other MRM-related topics that are covered in my document collection."
+                }
+            
             prompt = f"""
-            You are a professional Model Risk Management (MRM) AI assistant. 
-            Answer the following question based on the provided context from MRM documents.
-            
-            Context:
+            You are a specialized Model Risk Management (MRM) AI assistant. You can ONLY answer questions that are:
+            1. Directly related to Model Risk Management
+            2. Covered in the provided document context
+            3. About regulatory compliance (SR 11-7, Basel III, CCAR/DFAST, etc.)
+            4. Related to model validation, governance, or risk assessment
+            5. About MRM frameworks, policies, or procedures
+
+            CRITICAL RULES:
+            - If the question is NOT about MRM or NOT covered in the context, respond with: "I can only answer questions related to Model Risk Management based on my available documents. Please ask a question about MRM topics, model validation, risk governance, or regulatory compliance."
+            - Only use information from the provided context
+            - Do not provide general knowledge outside the context
+            - Do not answer questions about other topics (coding, general AI, etc.)
+            - Be specific and reference the document content
+
+            Available Context from MRM Documents:
             {state.context}
-            
-            Question: {state.query}
-            
-            Please provide a comprehensive, professional answer that:
-            1. Addresses the specific question
-            2. References relevant information from the context
-            3. Uses professional MRM terminology
-            4. Includes risk considerations where applicable
-            5. Provides actionable insights when possible
-            
+
+            User Question: {state.query}
+
+            Instructions:
+            1. First, determine if this is an MRM-related question
+            2. Check if the context contains relevant information
+            3. If YES to both: Provide a detailed, professional MRM answer
+            4. If NO to either: Politely decline and redirect to MRM topics
+            5. Always cite specific information from the context when possible
+            6. Use professional MRM terminology and frameworks
+
             Answer:
             """
             

@@ -218,7 +218,7 @@ export default function Home() {
                     </div>
                     <h3 className="text-lg font-medium text-gray-900 mb-2">Welcome to MRM AI Assistant</h3>
                     <p className="text-gray-600 max-w-md mx-auto">
-                      Get professional insights on Model Risk Management, validation, governance, and compliance.
+                      I can only answer questions about Model Risk Management based on my available documents. Ask about MRM frameworks, validation, governance, or regulatory compliance.
                     </p>
                   </div>
                 ) : (
@@ -275,7 +275,7 @@ export default function Home() {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Ask about model risk assessment, validation, or governance..."
+                    placeholder="Ask about MRM frameworks, validation, governance, or regulatory compliance..."
                     className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     disabled={isLoading}
                   />
