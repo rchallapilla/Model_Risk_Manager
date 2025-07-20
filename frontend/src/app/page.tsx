@@ -1,10 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { Shield, BarChart3, FileText, TrendingUp, AlertTriangle, CheckCircle, Clock, Send } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  timestamp: Date;
 }
 
 export default function Home() {
@@ -16,7 +19,11 @@ export default function Home() {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const userMessage: Message = { role: 'user', content: input };
+    const userMessage: Message = { 
+      role: 'user', 
+      content: input,
+      timestamp: new Date()
+    };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
@@ -29,7 +36,7 @@ export default function Home() {
         },
         body: JSON.stringify({
           user_message: input,
-          developer_message: "Respond in Markdown with bullet points where helpful. Include code examples in code blocks. Label your answer sections with headers. You are a spiritual guide that combines Isaac Asimov's scientific vision with ancient Indian wisdom. Respond with insights that merge Asimov's Three Laws of Robotics with concepts from Vedanta, while maintaining a futuristic yet spiritual perspective.",
+          developer_message: "You are a professional Model Risk Management (MRM) AI assistant. Provide clear, structured responses about model risk analysis, validation, governance, and compliance. Use professional language and include relevant risk metrics, regulatory considerations, and best practices. Format responses with clear headings, bullet points, and code examples where appropriate.",
           model: "gpt-4.1-mini"
         }),
       });
@@ -43,7 +50,11 @@ export default function Home() {
       if (!reader) throw new Error('No response body');
 
       let accumulatedResponse = '';
-      setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: '',
+        timestamp: new Date()
+      }]);
 
       while (true) {
         const { done, value } = await reader.read();
@@ -64,85 +75,261 @@ export default function Home() {
       console.error('Error:', error);
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: `Error: ${error instanceof Error ? error.message : 'Failed to connect to the backend'}` 
+        content: `Error: ${error instanceof Error ? error.message : 'Failed to connect to the backend'}`,
+        timestamp: new Date()
       }]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 text-white">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <header className="text-center mb-8">
-          <div className="relative">
-            <h1 className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-purple-400 to-cyan-400">
-              Asimov-Vedanta Interface
-            </h1>
-            <div className="absolute -top-4 -right-4 text-2xl">ॐ</div>
-          </div>
-          <p className="text-purple-200 mt-2">Where Robotics Laws meet Cosmic Dharma</p>
-          <div className="mt-4 text-sm text-purple-300">
-            <p>First Law: A robot may not injure a human being or, through inaction, allow a human being to come to harm.</p>
-            <p>Second Law: A robot must obey orders given it by human beings except where such orders would conflict with the First Law.</p>
-            <p>Third Law: A robot must protect its own existence as long as such protection does not conflict with the First or Second Law.</p>
-          </div>
-          <div className="mt-6">
-            <a
-              href="/pdf-chat"
-              className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-amber-600 rounded-lg font-semibold hover:from-purple-700 hover:to-amber-700 transition-all border border-purple-500/30 text-white"
-            >
-              📄 PDF RAG Chat
-            </a>
-          </div>
-        </header>
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: true 
+    });
+  };
 
-        <div className="bg-black/40 backdrop-blur-lg rounded-lg p-6 mb-6 h-[60vh] overflow-y-auto border border-purple-500/30">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`mb-4 ${
-                message.role === 'user' ? 'text-right' : 'text-left'
-              }`}
-            >
-              <div
-                className={`inline-block p-4 rounded-lg ${
-                  message.role === 'user'
-                    ? 'bg-amber-600/80 ml-auto'
-                    : 'bg-purple-600/80'
-                } max-w-[80%] border border-purple-500/30`}
-              >
-                <p className="text-sm opacity-75 mb-1">
-                  {message.role === 'user' ? 'You' : 'Asimov-Vedanta Guide'}
-                </p>
-                <p className="leading-relaxed">{message.content}</p>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold text-gray-900">MRM AI Assistant</h1>
+                  <p className="text-sm text-gray-600">Model Risk Management Platform</p>
+                </div>
               </div>
             </div>
-          ))}
-          {isLoading && (
-            <div className="text-center text-purple-300">
-              <div className="inline-block animate-pulse">Processing through the cosmic network...</div>
+                          <div className="flex items-center space-x-4">
+                <div className="hidden md:flex items-center space-x-6 text-sm text-gray-600">
+                  <div className="flex items-center space-x-2">
+                    <BarChart3 className="w-4 h-4" />
+                    <span>Analytics</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <FileText className="w-4 h-4" />
+                    <span>Reports</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <TrendingUp className="w-4 h-4" />
+                    <span>Dashboard</span>
+                  </div>
+                  <Link href="/pdf-chat" className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors">
+                    <FileText className="w-4 h-4" />
+                    <span>Document Analysis</span>
+                  </Link>
+                </div>
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-semibold">AI</span>
+              </div>
             </div>
-          )}
+          </div>
         </div>
+      </header>
 
-        <form onSubmit={handleSubmit} className="flex gap-4">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about the intersection of robotics and consciousness..."
-            className="flex-1 p-4 rounded-lg bg-black/40 backdrop-blur-lg text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 border border-purple-500/30"
-          />
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="px-6 py-4 bg-gradient-to-r from-amber-600 to-purple-600 rounded-lg font-semibold hover:from-amber-700 hover:to-purple-700 transition-all disabled:opacity-50 border border-purple-500/30"
-          >
-            Send
-          </button>
-        </form>
-      </div>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
+              <div className="space-y-3">
+                <button className="w-full text-left p-3 rounded-lg bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors">
+                  <div className="flex items-center space-x-3">
+                    <AlertTriangle className="w-5 h-5 text-blue-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">Risk Assessment</div>
+                      <div className="text-sm text-gray-600">Evaluate model risks</div>
+                    </div>
+                  </div>
+                </button>
+                <button className="w-full text-left p-3 rounded-lg bg-green-50 border border-green-200 hover:bg-green-100 transition-colors">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">Validation</div>
+                      <div className="text-sm text-gray-600">Model validation</div>
+                    </div>
+                  </div>
+                </button>
+                <button className="w-full text-left p-3 rounded-lg bg-purple-50 border border-purple-200 hover:bg-purple-100 transition-colors">
+                  <div className="flex items-center space-x-3">
+                    <BarChart3 className="w-5 h-5 text-purple-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">Performance</div>
+                      <div className="text-sm text-gray-600">Monitor metrics</div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <h3 className="text-sm font-medium text-gray-900 mb-3">Recent Activity</h3>
+                <div className="space-y-2 text-sm text-gray-600">
+                  <div className="flex items-center space-x-2">
+                    <Clock className="w-4 h-4" />
+                    <span>Model validation completed</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Clock className="w-4 h-4" />
+                    <span>Risk assessment updated</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Clock className="w-4 h-4" />
+                    <span>New model registered</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Chat Area */}
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              {/* Chat Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-lg font-semibold text-white">AI Assistant</h2>
+                    <p className="text-blue-100 text-sm">Ask about Model Risk Management</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-blue-100 text-sm">Online</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Messages */}
+              <div className="h-96 overflow-y-auto p-6 bg-gray-50">
+                {messages.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Shield className="w-8 h-8 text-blue-600" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Welcome to MRM AI Assistant</h3>
+                    <p className="text-gray-600 max-w-md mx-auto">
+                      Get professional insights on Model Risk Management, validation, governance, and compliance.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {messages.map((message, index) => (
+                      <div
+                        key={index}
+                        className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                      >
+                        <div
+                          className={`max-w-[80%] rounded-lg p-4 ${
+                            message.role === 'user'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-white border border-gray-200 text-gray-900'
+                          }`}
+                        >
+                          <div className="flex items-center space-x-2 mb-2">
+                            <span className="text-xs opacity-75">
+                              {message.role === 'user' ? 'You' : 'MRM AI'}
+                            </span>
+                            <span className="text-xs opacity-75">•</span>
+                            <span className="text-xs opacity-75">
+                              {formatTime(message.timestamp)}
+                            </span>
+                          </div>
+                          <div className="prose prose-sm max-w-none">
+                            <p className="whitespace-pre-wrap">{message.content}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {isLoading && (
+                      <div className="flex justify-start">
+                        <div className="bg-white border border-gray-200 rounded-lg p-4 max-w-[80%]">
+                          <div className="flex items-center space-x-2">
+                            <div className="flex space-x-1">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"></div>
+                              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                            </div>
+                            <span className="text-sm text-gray-600">Analyzing your request...</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Input Form */}
+              <div className="border-t border-gray-200 p-4 bg-white">
+                <form onSubmit={handleSubmit} className="flex space-x-4">
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Ask about model risk assessment, validation, or governance..."
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                    disabled={isLoading}
+                  />
+                  <button
+                    type="submit"
+                    disabled={isLoading || !input.trim()}
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>Send</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            {/* Additional Features */}
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-900">Model Validation</h3>
+                    <p className="text-sm text-gray-600">Comprehensive validation reports</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <BarChart3 className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-900">Risk Analytics</h3>
+                    <p className="text-sm text-gray-600">Advanced risk metrics</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-900">Documentation</h3>
+                    <p className="text-sm text-gray-600">Regulatory compliance</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

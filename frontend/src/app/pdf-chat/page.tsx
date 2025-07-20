@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useRef } from 'react';
+import { Shield, FileText, Upload, MessageSquare, ArrowLeft, CheckCircle, Clock, Send } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -128,143 +129,272 @@ export default function PDFChat() {
   };
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: true 
+    });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 text-white">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-purple-400 to-cyan-400">
-            PDF RAG Chat System
-          </h1>
-          <p className="text-purple-200 mt-2">Upload a PDF and chat with it using AI-powered retrieval</p>
-        </header>
-
-        {/* PDF Upload Section */}
-        <div className="bg-black/40 backdrop-blur-lg rounded-lg p-6 mb-6 border border-purple-500/30">
-          <h2 className="text-xl font-semibold mb-4 text-purple-300">Upload PDF</h2>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".pdf"
-              onChange={handleFileUpload}
-              className="hidden"
-              id="pdf-upload"
-            />
-            <label
-              htmlFor="pdf-upload"
-              className="px-6 py-3 bg-gradient-to-r from-amber-600 to-purple-600 rounded-lg font-semibold hover:from-amber-700 hover:to-purple-700 transition-all cursor-pointer border border-purple-500/30"
-            >
-              {isUploading ? 'Uploading...' : 'Choose PDF File'}
-            </label>
-            {isUploading && (
-              <div className="text-purple-300 animate-pulse">Processing PDF...</div>
-            )}
-          </div>
-
-          {/* Uploaded PDFs List */}
-          {uploadedPDFs.length > 0 && (
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold mb-2 text-purple-300">Uploaded PDFs:</h3>
-              <div className="space-y-2">
-                {uploadedPDFs.map((pdf, index) => (
-                  <div
-                    key={index}
-                    className={`p-3 rounded-lg border cursor-pointer transition-all ${
-                      selectedPDF === pdf.filename
-                        ? 'bg-purple-600/80 border-purple-400'
-                        : 'bg-black/20 border-purple-500/30 hover:bg-purple-600/40'
-                    }`}
-                    onClick={() => setSelectedPDF(pdf.filename)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">{pdf.filename}</span>
-                      <span className={`text-sm px-2 py-1 rounded ${
-                        pdf.status === 'indexed' 
-                          ? 'bg-green-600/80 text-green-100' 
-                          : 'bg-yellow-600/80 text-yellow-100'
-                      }`}>
-                        {pdf.status}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-4">
+              <Link href="/" className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back to Main</span>
+              </Link>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <FileText className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">Document Analysis</h1>
+                <p className="text-sm text-gray-600">PDF RAG Chat System</p>
               </div>
             </div>
-          )}
-        </div>
-
-        {/* Chat Section */}
-        <div className="bg-black/40 backdrop-blur-lg rounded-lg p-6 mb-6 h-[50vh] overflow-y-auto border border-purple-500/30">
-          {messages.length === 0 ? (
-            <div className="text-center text-purple-300 mt-8">
-              <p>Upload a PDF and start asking questions!</p>
+            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <span className="text-white text-sm font-semibold">AI</span>
             </div>
-          ) : (
-            messages.map((message, index) => (
-              <div
-                key={index}
-                className={`mb-4 ${
-                  message.role === 'user' ? 'text-right' : 'text-left'
-                }`}
-              >
-                <div
-                  className={`inline-block p-4 rounded-lg ${
-                    message.role === 'user'
-                      ? 'bg-amber-600/80 ml-auto'
-                      : 'bg-purple-600/80'
-                  } max-w-[80%] border border-purple-500/30`}
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Document Management</h2>
+              
+              {/* Upload Section */}
+              <div className="mb-6">
+                <h3 className="text-sm font-medium text-gray-900 mb-3">Upload Documents</h3>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".pdf"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  id="pdf-upload"
+                />
+                <label
+                  htmlFor="pdf-upload"
+                  className="w-full flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer border border-blue-600"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm opacity-75">
-                      {message.role === 'user' ? 'You' : 'AI Assistant'}
-                    </p>
-                    <p className="text-xs opacity-50">{formatTime(message.timestamp)}</p>
+                  <Upload className="w-4 h-4 mr-2" />
+                  {isUploading ? 'Uploading...' : 'Upload PDF'}
+                </label>
+                {isUploading && (
+                  <div className="mt-2 text-sm text-gray-600 flex items-center">
+                    <Clock className="w-4 h-4 mr-1" />
+                    Processing document...
                   </div>
-                  <div className="leading-relaxed whitespace-pre-wrap">{message.content}</div>
+                )}
+              </div>
+
+              {/* Uploaded Documents */}
+              {uploadedPDFs.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-medium text-gray-900 mb-3">Uploaded Documents</h3>
+                  <div className="space-y-2">
+                    {uploadedPDFs.map((pdf, index) => (
+                      <div
+                        key={index}
+                        className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                          selectedPDF === pdf.filename
+                            ? 'bg-blue-50 border-blue-300'
+                            : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+                        }`}
+                        onClick={() => setSelectedPDF(pdf.filename)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <FileText className="w-4 h-4 text-gray-600" />
+                            <span className="text-sm font-medium text-gray-900 truncate">
+                              {pdf.filename}
+                            </span>
+                          </div>
+                          <span className={`text-xs px-2 py-1 rounded-full ${
+                            pdf.status === 'indexed' 
+                              ? 'bg-green-100 text-green-800' 
+                              : 'bg-yellow-100 text-yellow-800'
+                          }`}>
+                            {pdf.status}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Quick Actions */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <h3 className="text-sm font-medium text-gray-900 mb-3">Quick Actions</h3>
+                <div className="space-y-2 text-sm text-gray-600">
+                  <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-50">
+                    <CheckCircle className="w-4 h-4 text-green-600" />
+                    <span>Document validation</span>
+                  </div>
+                  <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-50">
+                    <MessageSquare className="w-4 h-4 text-blue-600" />
+                    <span>Chat with documents</span>
+                  </div>
+                  <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-50">
+                    <Shield className="w-4 h-4 text-purple-600" />
+                    <span>Risk assessment</span>
+                  </div>
                 </div>
               </div>
-            ))
-          )}
-          {isLoading && (
-            <div className="text-center text-purple-300">
-              <div className="inline-block animate-pulse">Searching through PDF and generating response...</div>
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* Chat Input */}
-        <form onSubmit={handleSubmit} className="flex gap-4">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={selectedPDF ? `Ask a question about "${selectedPDF}"...` : "Upload a PDF first to start chatting..."}
-            disabled={!selectedPDF}
-            className="flex-1 p-4 rounded-lg bg-black/40 backdrop-blur-lg text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 border border-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !selectedPDF || !input.trim()}
-            className="px-6 py-4 bg-gradient-to-r from-amber-600 to-purple-600 rounded-lg font-semibold hover:from-amber-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-purple-500/30"
-          >
-            {isLoading ? 'Sending...' : 'Ask'}
-          </button>
-        </form>
+          {/* Chat Area */}
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              {/* Chat Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-lg font-semibold text-white">Document Analysis</h2>
+                    <p className="text-blue-100 text-sm">
+                      {selectedPDF ? `Analyzing: ${selectedPDF}` : 'Upload a document to start analyzing'}
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-blue-100 text-sm">Ready</span>
+                  </div>
+                </div>
+              </div>
 
-        {/* Navigation */}
-        <div className="mt-8 text-center">
-          <Link
-            href="/"
-            className="text-purple-300 hover:text-purple-100 transition-colors underline"
-          >
-            ← Back to Asimov-Vedanta Chat
-          </Link>
+              {/* Messages */}
+              <div className="h-96 overflow-y-auto p-6 bg-gray-50">
+                {messages.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <FileText className="w-8 h-8 text-blue-600" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Document Analysis Ready</h3>
+                    <p className="text-gray-600 max-w-md mx-auto">
+                      Upload a PDF document and start asking questions for AI-powered analysis and insights.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {messages.map((message, index) => (
+                      <div
+                        key={index}
+                        className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                      >
+                        <div
+                          className={`max-w-[80%] rounded-lg p-4 ${
+                            message.role === 'user'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-white border border-gray-200 text-gray-900'
+                          }`}
+                        >
+                          <div className="flex items-center space-x-2 mb-2">
+                            <span className="text-xs opacity-75">
+                              {message.role === 'user' ? 'You' : 'Document AI'}
+                            </span>
+                            <span className="text-xs opacity-75">•</span>
+                            <span className="text-xs opacity-75">
+                              {formatTime(message.timestamp)}
+                            </span>
+                          </div>
+                          <div className="prose prose-sm max-w-none">
+                            <p className="whitespace-pre-wrap">{message.content}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {isLoading && (
+                      <div className="flex justify-start">
+                        <div className="bg-white border border-gray-200 rounded-lg p-4 max-w-[80%]">
+                          <div className="flex items-center space-x-2">
+                            <div className="flex space-x-1">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"></div>
+                              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                            </div>
+                            <span className="text-sm text-gray-600">Analyzing document...</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Input Form */}
+              <div className="border-t border-gray-200 p-4 bg-white">
+                <form onSubmit={handleSubmit} className="flex space-x-4">
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder={selectedPDF ? `Ask about "${selectedPDF}"...` : "Upload a document first to start analyzing..."}
+                    disabled={!selectedPDF}
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isLoading || !selectedPDF || !input.trim()}
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>Ask</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            {/* Additional Features */}
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-900">Document Validation</h3>
+                    <p className="text-sm text-gray-600">Verify document integrity</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <MessageSquare className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-900">AI Analysis</h3>
+                    <p className="text-sm text-gray-600">Intelligent document insights</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-900">Risk Assessment</h3>
+                    <p className="text-sm text-gray-600">Identify potential risks</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 } 
